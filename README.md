@@ -1,13 +1,13 @@
-# 🏛️ GovAI-Sim: 基于大语言模型的公共绩效智能治理与推演沙盒
+# 🏛️ Public_Performance_System: 基于大语言模型的公共绩效智能治理与推演沙盒
 
 [![Python Version](https://img.shields.io/badge/python-3.9%2B-blue.svg)](https://www.python.org/)
 [![Streamlit App](https://img.shields.io/badge/Streamlit-Framework-FF4B4B.svg)](https://streamlit.io/)
 [![LangChain](https://img.shields.io/badge/LangChain-RAG-green.svg)](https://langchain.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-GovAI-Sim 是一个将**公共行政管理理论**与**计算社会科学（CSS）前沿 AI 技术**深度融合的开源实证与决策支持项目。
+Public_Performance_System 是一个将**公共行政管理理论**与**计算社会科学（CSS）前沿 AI 技术**深度融合的开源实证与决策支持项目。
 
-本项目摒弃了传统的静态指标评价模式，依托高参数量大语言模型（如 Qwen-72B / DeepSeek-V3），为基层政府（如街道办）构建了一个集“政策溯源、动态诊断、多主体仿真、经验沉淀”于一体的数字治理沙盒。它能够在政策真实落地前，有效压测公共资源分配与绩效考核中的摩擦成本与非预期后果。
+本项目摒弃了传统的静态指标评价模式，依托高参数量大语言模型（如 Qwen-32B / DeepSeek-V3），为基层政府（如街道办）构建了一个集“政策溯源、动态诊断、多主体仿真、经验沉淀”于一体的数字治理沙盒。它能够在政策真实落地前，有效压测公共资源分配与绩效考核中的摩擦成本与非预期后果。
 
 ---
 
