@@ -1,0 +1,46 @@
+# 1. 机密信息与配置文件 
+.env
+.env.*
+*.local
+
+# 2. 本地生成的向量数据库 (体积大且仅供本地检索使用)
+local_faiss/
+
+# 3. Python 运行时自动生成的缓存文件 
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# 4. 虚拟环境文件夹 
+venv/
+.venv/
+env/
+.env_venv/
+
+# 5. 操作系统自动生成的隐藏垃圾文件
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
