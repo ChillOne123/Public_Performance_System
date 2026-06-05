@@ -56,7 +56,7 @@ GovAI-Sim/
 **1. 克隆仓库**
 
 ```bash
-git clone [https://github.com/ChillOne123/GovAI-Sim.git](https://github.com/ChillOne123/GovAI-Sim.git)
+git clone [https://github.com/ChillOne123/GovAI-Sim.git](https://github.com/ChillOne123/Public_Performance_System.git)
 cd GovAI-Sim
 
 ```
@@ -73,8 +73,8 @@ pip install -r requirements.txt
 复制 `.env.example` 文件并重命名为 `.env`，填入各类兼容 OpenAI 格式的 API Key。
 
 ```env
-SILICONFLOW_API_KEY="your_api_key_here"
-SILICONFLOW_BASE_URL="[https://api.siliconflow.cn/v1](https://api.siliconflow.cn/v1)"
+API_KEY="your_api_key_here"
+BASE_URL="[https://api.siliconflow.cn/v1](https://api.siliconflow.cn/v1)"
 
 ```
 
