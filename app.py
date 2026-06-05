@@ -14,7 +14,7 @@ SILICONFLOW_BASE_URL = os.getenv("SILICONFLOW_BASE_URL")
 
 # ================= 2. 页面与全局配置 =================
 st.set_page_config(
-    page_title="GovAI-Sim 公共绩效智能沙盒", 
+    page_title="Public Performance System 公共绩效智能沙盒", 
     page_icon="🏛️", 
     layout="wide",
     initial_sidebar_state="expanded"
@@ -99,35 +99,33 @@ elif page == "📊 动态考核沙盘 (数据诊断)":
     st.title("📊 动态平衡计分卡 (BSC) 诊断沙盘")
     st.markdown("模拟篡改基层运行数据，压测考核指标的韧性并自动生成公文级整改报告。")
     
-    # 构造一份包含“雷点”的初始考核数据
     if "bsc_data" not in st.session_state:
         st.session_state.bsc_data = pd.DataFrame({
             "考核维度": ["热线办理", "热线办理", "网格治理", "网格治理", "红线约束"],
             "指标名称": ["热线诉求同比降幅", "市民满意率", "网格主动上报数", "漏报事部件数", "异常退单/强行反馈"],
             "基准要求": ["同比下降", "85%", "≥30件/月", "0件", "0件"],
-            "当前数值": ["上升2%", "81%", "26件", "4件", "1件"], # 这里全是扣分项，方便演示诊断
+            "当前数值": ["上升2%", "81%", "26件", "4件", "1件"],
             "计分规则": ["每升1%扣0.1", "低于85%每1%扣0.5", "少1件扣0.5", "每件扣0.01", "每件扣0.5"]
         })
 
-    st.warning("💡 **操作提示：** 您可以在下方表格中直接双击修改【当前数值】列的数据（例如把满意率改成 90%），然后点击诊断按钮，系统将根据新数据重新生成评估。")
+    st.warning("💡 **操作提示：** 您可以在下方表格中直接双击修改【当前数值】列的数据，然后点击诊断按钮。")
     
-    # 使用 st.data_editor 让表格可编辑
     edited_df = st.data_editor(
         st.session_state.bsc_data, 
         use_container_width=True,
         hide_index=True,
-        disabled=["考核维度", "指标名称", "基准要求", "计分规则"] # 冻结规则列，只允许改数据
+        disabled=["考核维度", "指标名称", "基准要求", "计分规则"]
     )
     
+    # 🎯 第一个按钮：负责生成并写入“全局记忆”
     if st.button("🚀 启动大模型智能归因与诊断", type="primary"):
         with st.spinner(f"正在调用 {model_choice} 进行多维数据穿透分析..."):
-            # 将前端表格转换为文本喂给模型
             data_str = edited_df.to_string(index=False)
             
             prompt = ChatPromptTemplate.from_messages([
                 ("system", "你是一个资深的政府绩效评估专家。请根据以下提取的基层街道运行数据表，写一份严肃的《月度绩效异常诊断与整改督办单》。\n"
                            "要求：\n1. 严格对照'基准要求'和'计分规则'，计算并指出具体扣了多少分。\n"
-                           "2. 语言必须高度符合中国大陆体制内公文规范（使用'经查'、'亟待整改'、'压实责任'等词汇）。\n"
+                           "2. 语言必须高度符合中国大陆体制内公文规范。\n"
                            "3. 使用 Markdown 排版，结构清晰。"),
                 ("human", "当前各维度数据如下：\n{data}")
             ])
@@ -135,8 +133,41 @@ elif page == "📊 动态考核沙盘 (数据诊断)":
             chain = prompt | current_llm
             result = chain.invoke({"data": data_str})
             
-            st.markdown("### 📑 智能诊断督办单")
-            st.info(result.content)
+            # 【核心护城河】：把数据和结果死死钉在 session_state 里
+            st.session_state.diagnosis_result = result.content
+            st.session_state.diagnosis_data = data_str
+
+    # 🎯 记忆读取区：与第一个按钮完全平级！只要脑子里有记忆，就永远显示这段 UI
+    if "diagnosis_result" in st.session_state:
+        st.markdown("### 📑 智能诊断督办单")
+        st.info(st.session_state.diagnosis_result)
+        
+        st.markdown("---")
+        st.markdown("#### 🔄 AutoSkill 专家经验自进化系统")
+        st.caption("检测到高价值的诊断逻辑，是否将其固化为系统底层技能？")
+        
+        # 第二个按钮：独立运作，专门负责落盘存文件
+        if st.button("💾 将此逻辑固化入系统技能库 (Skill Bank)", type="secondary"):
+            if not os.path.exists("skill_bank"):
+                os.makedirs("skill_bank")
+            
+            skill_id = int(time.time())
+            file_path = f"skill_bank/bsc_skill_{skill_id}.md"
+            
+            skill_content = f"""# 专家诊断技能档案 (ID: {skill_id})
+
+## 1. 异常触发条件 (Data Vector)
+```text
+{st.session_state.diagnosis_data}
+2. 固化处置逻辑 (Action Logic)
+{st.session_state.diagnosis_result}
+"""
+            with open(file_path, "w", encoding="utf-8") as f:
+                f.write(skill_content)
+
+            st.balloons()
+            st.toast("✅ 专家知识固化成功！", icon="🧠")
+            st.success(f"系统自进化完成！该处置逻辑已永久写入底层架构：`{file_path}`。")
 
 # ================= 模块 3: 多主体博弈仿真 =================
 elif page == "👥 多主体博弈仿真 (Agent)":
