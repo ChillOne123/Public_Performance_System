@@ -56,7 +56,7 @@ GovAI-Sim/
 **1. 克隆仓库**
 
 ```bash
-git clone [https://github.com/ChillOne123/GovAI-Sim.git](https://github.com/ChillOne123/Public_Performance_System.git)
+git clone [https://github.com/ChillOne123/Public_Performance_System.git](https://github.com/ChillOne123/Public_Performance_System.git)
 cd GovAI-Sim
 
 ```
