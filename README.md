@@ -57,7 +57,7 @@ GovAI-Sim/
 
 ```bash
 git clone [https://github.com/ChillOne123/Public_Performance_System.git](https://github.com/ChillOne123/Public_Performance_System.git)
-cd GovAI-Sim
+cd Public_Performance_System
 
 ```
 
